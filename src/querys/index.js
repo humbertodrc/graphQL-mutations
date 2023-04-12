@@ -14,6 +14,14 @@ query AllTasks {
 }
 `;
 
+export const GET_TASK_BY_TITLE = gql`
+query findTaskByTitle($title: String!) {
+  findTaskByTitle(title: $title) {
+    id
+  }
+}
+`
+
 export const CREATE_TASK = gql`
   mutation createTask($title: String!, $description: String) {
     createTask(title: $title, description: $description) {
@@ -27,3 +35,4 @@ export const CREATE_TASK = gql`
     }
   }
 `;
+

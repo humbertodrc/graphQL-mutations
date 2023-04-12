@@ -8,17 +8,15 @@ export const CreateTask = ({onCreateTask}) => {
 
 	const [createTask, {loading, error}] = useMutation(CREATE_TASK, {
 		onError: (error) => {
-			// console.log(error);
+			console.log(error.message);
 		},
 		onCompleted: (data) => {
-			// console.log(data.createTask);
+			console.log(data.createTask);
 		},
 	});
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-
-		// Aquí iría el código para crear la tarea utilizando la API y el cliente de Apollo
 
 		createTask({
 			variables: {
@@ -27,20 +25,15 @@ export const CreateTask = ({onCreateTask}) => {
 			},
 		});
 
-		const newTask = {
-			id: Math.random(),
-			title,
-			description,
-		};
-
-		onCreateTask(newTask);
+		onCreateTask();
 
 		setTitle("");
 		setDescription("");
 	};
 
 	return (
-		<>
+    <>
+      {error && <p>Error: {error.message}</p>}
 			{loading && <p>Loading...</p>}
 			<form onSubmit={handleSubmit}>
 				<h2>Create Task</h2>
