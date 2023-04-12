@@ -1,31 +1,40 @@
-import { useQuery } from '@apollo/client';
-import './App.css'
-// import { AddCountry } from './components/AddCountry'
-// import { Country } from './components/Country'
-import { GET_TASK } from './querys';
+import { useQuery } from "@apollo/client";
+import { useState } from "react";
+import "./App.css";
+import { GET_ALL_TASKS } from "./querys";
+import { CreateTask } from './components/CreateTask';
 
 function App() {
+	const { loading, error, data, refetch } = useQuery(GET_ALL_TASKS)
+  const [tasks, setTasks] = useState([])
 
-  const { loading, error, data } = useQuery(GET_TASK);
+  const handleCreateTask = (newTask) => {
+    setTasks([...tasks, newTask])
+    refetch()
+  }
 
-  console.log(data.allTasks);
+  const handleDeleteTask = (taskId) => {
+    setTasks(tasks.filter(task => task.id !== taskId))
+  }
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Error: {error.message}</p>
 
   return (
-    <div className="App">
-      {data?.allTasks.map(task => (
-        <div key={task.id}>
-          <h3>{task.title}</h3>
-          <p>{task.description}</p>
-        </div>
+    <div>
+      <h1>Task List</h1>
+      <ul>
+        {data.allTasks.map(task => (
+          <li key={task.id}>
+            <h2>{task.title}</h2>
+            <p>{task.description}</p>
+            <button onClick={() => handleDeleteTask(task.id)}>Delete</button>
+          </li>
         ))}
-      
-      {/* <Country />
-      <AddCountry /> */}
+      </ul>
+      <CreateTask onCreateTask={handleCreateTask} />
     </div>
   )
 }
 
-export default App
+export default App;

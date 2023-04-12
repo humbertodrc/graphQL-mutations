@@ -1,32 +1,6 @@
 import { gql } from "@apollo/client";
 
-// export const GET_COUNTRIES = gql`
-//   query GetCountries {
-//     countries {
-//       name
-//       capital
-//       currency,
-//       languages {
-//         name
-//       }
-//     }
-//   }
-// `
-
-// export const ADD_COUNTRY = gql`
-//   mutation AddCountry($name: String!, $capital: String!, $currency: String!, $languages: [String!]!) {
-//     addCountry(input: { name: $name, capital: $capital, currency: $currency, languages: $languages }) {
-//       name
-//       capital
-//       currency
-//       languages {
-//         name
-//       }
-//     }
-//   }
-// `;
-
-export const GET_TASK = gql`
+export const GET_ALL_TASKS = gql`
 query AllTasks {
   allTasks {
     id
@@ -38,4 +12,18 @@ query AllTasks {
     }
   }
 }
+`;
+
+export const CREATE_TASK = gql`
+  mutation createTask($title: String!, $description: String) {
+    createTask(title: $title, description: $description) {
+      id
+      title
+      description
+      priority {
+        high
+        medium
+      }
+    }
+  }
 `;
