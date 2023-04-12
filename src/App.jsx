@@ -1,4 +1,5 @@
 import './App.css'
+import { AddCountry } from './components/AddCountry'
 import { Country } from './components/Country'
 
 function App() {
@@ -6,6 +7,7 @@ function App() {
   return (
     <div className="App">
       <Country />
+      <AddCountry />
     </div>
   )
 }
